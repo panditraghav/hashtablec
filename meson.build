@@ -1,7 +1,10 @@
 project('hashtable', 'c')
 
-src = ['./src/main.c', './src/prime.c', './src/hash_table.c']
+src = ['./src/main.c',]
 
 incdir = include_directories('./src')
 
-executable('ht', src, include_directories: incdir)
+cc = meson.get_compiler('c')
+math = cc.find_library('m')
+
+executable('ht', src, include_directories: incdir, dependencies: [math])
