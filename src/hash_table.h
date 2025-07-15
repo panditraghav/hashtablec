@@ -22,7 +22,7 @@ char *ht_search(HashTable *ht, const char *key);
 void ht_delete(HashTable *ht);
 void ht_delete_item(HashTable *ht, const char *key);
 
-#define HT_IMPLEMENTATION
+// #define HT_IMPLEMENTATION
 #ifdef HT_IMPLEMENTATION
 
 #include <math.h>
@@ -34,7 +34,6 @@ void ht_delete_item(HashTable *ht, const char *key);
 #define HT_INITIAL_BASE_SIZE 50
 
 /*--------------------------INTERNAL UTILITY FUNCTIONS------------------------*/
-static HashTableItem HT_DELETED_ITEM = {NULL, NULL};
 
 static int is_prime(const int x);
 static int next_prime(int x);
@@ -50,8 +49,6 @@ static void ht_free_item(HashTableItem *item);
 
 static int ht_hash(const char *s, const int prime_num,
                    const int num_of_buckets);
-static int ht_get_hash(const char *s, const int num_buckets,
-                       const int attempts);
 
 /*------------------API FUNCTION IMPLEMENTATION------------------------------*/
 HashTable *ht_new() { return ht_new_sized(HT_INITIAL_BASE_SIZE); }
@@ -219,14 +216,6 @@ static int ht_hash(const char *s, const int prime_num,
   }
 
   return (int)hash;
-}
-
-static int ht_get_hash(const char *s, const int num_buckets,
-                       const int attempts) {
-  int hash_a = ht_hash(s, HT_PRIME_1, num_buckets);
-  int hash_b = ht_hash(s, HT_PRIME_2, num_buckets);
-
-  return (hash_a + (hash_b + 1) * attempts) % num_buckets;
 }
 
 /*
