@@ -1,4 +1,5 @@
 #ifndef HT_HASHTABLE
+#define HT_HASHTABLE
 
 typedef struct {
   char *key;
