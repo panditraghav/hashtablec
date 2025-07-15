@@ -1,3 +1,4 @@
+#define HT_IMPLEMENTATION
 #include "hash_table.h"
 #include <stdio.h>
 
