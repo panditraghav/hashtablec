@@ -22,7 +22,7 @@ char *ht_search(HashTable *ht, const char *key);
 void ht_delete(HashTable *ht);
 void ht_delete_item(HashTable *ht, const char *key);
 
-// #define HT_IMPLEMENTATION
+#define HT_IMPLEMENTATION
 #ifdef HT_IMPLEMENTATION
 
 #include <math.h>
@@ -108,33 +108,37 @@ char *ht_search(HashTable *ht, const char *key) {
 }
 
 void ht_delete_item(HashTable *ht, const char *key) {
-  const int load = ht->list_count * 100 / ht->size;
+  const int load = ht->item_count * 100 / ht->size;
   if (load < 10) {
     ht_resize_down(ht);
   }
 
-  int index = ht_hash(key, HT_PRIME_1, ht->list_count);
+  int index = ht_hash(key, HT_PRIME_1, ht->size);
   HashTableItem *item = ht->items[index];
 
-  if (item->next == NULL) {
-    ht_free_item(item);
-    ht->items[index] = NULL;
-    ht->item_count--;
-    ht->list_count--;
+  if (item == NULL) {
     return;
   }
 
-  HashTableItem *prev = ht->items[index];
+  HashTableItem *prev = NULL;
   while (item != NULL) {
     if (strcmp(item->key, key) == 0) {
+      if (prev == NULL) {
+        ht->items[index] = item->next;
+        ht_free_item(item);
+        break;
+      }
       prev->next = item->next;
       ht_free_item(item);
-      ht->item_count--;
-      return;
+      break;
     }
     prev = item;
     item = item->next;
   }
+  if (ht->items[index] == NULL) {
+    ht->list_count--;
+  }
+  ht->item_count--;
 }
 
 /*-------------------STATIC FUNCTIONS DEFINATION-----------------------------*/
