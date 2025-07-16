@@ -22,7 +22,7 @@ char *ht_search(HashTable *ht, const char *key);
 void ht_delete(HashTable *ht);
 void ht_delete_item(HashTable *ht, const char *key);
 
-#define HT_IMPLEMENTATION
+// #define HT_IMPLEMENTATION
 #ifdef HT_IMPLEMENTATION
 
 #include <math.h>
