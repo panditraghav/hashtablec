@@ -1,6 +1,6 @@
 # Hash table implementation in c
 
-STB style single header file source code, just copy the hash_table.h file to your source code and import like this
+STB style single header file source code, just copy the hash_table.h file to your project repo and import like this
 ```c
 #define HT_IMPLEMENTATION // Define this when you want to include implementation
 #include "hash_table.h"
