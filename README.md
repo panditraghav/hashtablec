@@ -6,6 +6,14 @@ STB style single header file source code, just copy the hash_table.h file to you
 #include "hash_table.h"
 ```
 
+Also add math library as dependency in your build system
+```meson
+cc = meson.get_compiler('c')
+math = cc.find_library('m')
+
+executable('ht', src, include_directories: incdir, dependencies: [math])
+```
+
 ## Public API
 ```c
 typedef struct HashTableItem HashTableItem;
